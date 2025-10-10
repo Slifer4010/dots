@@ -40,17 +40,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-
-# Path to your oh-my-zsh installation.
-# export ZSH="$HOME/.oh-my-zsh"
-# source $ZSH/oh-my-zsh.sh
-# source ~/powerlevel10k/powerlevel10k.zsh-theme
-
 # Custom PATH
 export PATH="$PATH:$HOME/.local/bin"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-# export PATH="$PATH:$HOME/.rvm/bin"
 
 # Fix the ssh problem
 export TERM=xterm-256color
@@ -78,7 +69,7 @@ source "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "/usr/share/zsh-sudo/sudo.plugin.zsh"
 
-# Function
+# Functions
 # fzf improvement
 function fzf-lovely(){
 
@@ -102,17 +93,40 @@ function fzf-lovely(){
   fi
 }
 
-
 # Project explorer
-function project_explorer() {
-  clear
-  /usr/local/bin/explorador
-  zle reset-prompt
+function explorar() {
+  CURRENT_DIR="$HOME/Projects"
+
+  while true; do
+    clear
+
+    SELECCION=$(ls -A "$CURRENT_DIR" | fzf \
+      --height=70% \
+      --layout=reverse \
+      --border=rounded \
+      --info=inline \
+      --prompt="Explorador > " \
+      --preview "bat --style=numbers --color=always --line-range=:100 $CURRENT_DIR/{} 2>/dev/null || ls -l $CURRENT_DIR/{}" \
+      --preview-window=right:50%:wrap)
+
+    if [[ -z "$SELECCION" ]]; then
+      break
+    fi
+
+    SELECCION_PATH="$CURRENT_DIR/$SELECCION"
+
+    if [ -d "$SELECCION_PATH" ]; then
+      CURRENT_DIR="$SELECCION_PATH"
+    elif [ -f "$SELECCION_PATH" ]; then
+      nvim "$SELECCION_PATH"
+      cd "$(dirname "$SELECCION_PATH")" || return
+      return
+    fi
+  done
 }
-zle -N project_explorer
 
 #Bindkey
-bindkey '^P' project_explorer
+bindkey -s "^P" "explorar\n"
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 bindkey "^[[3~" delete-char
