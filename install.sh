@@ -17,7 +17,7 @@ sudo apt install extrepo -y
 sudo extrepo enable librewolf
 
 # Instalando aplicaciones
-sudo apt install -y kitty fastfetch lsd bat neovim zsh zsh-autosuggestions zsh-syntax-highlighting curl librewolf nomacs python3-venv npm wl-clipboard flatpak plasma-discover-backend-flatpak python-is-python3 htop lazygit ranger fd-find solaar gcc-12 libgcc-12-dev gh ripgrep
+sudo apt install -y kitty fastfetch lsd bat neovim zsh zsh-autosuggestions zsh-syntax-highlighting curl librewolf nomacs python3-venv npm wl-clipboard flatpak plasma-discover-backend-flatpak python-is-python3 htop lazygit ranger fd-find solaar gcc-12 libgcc-12-dev gh ripgrep plymouth-themes kde-config-plymouth
 
 # Instalando Brave
 curl -fsS https://dl.brave.com/install.sh | sh
