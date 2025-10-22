@@ -15,6 +15,7 @@ echo ""
 # Instalando extrepo para Librewolf
 sudo apt install extrepo -y
 sudo extrepo enable librewolf
+sudo apt update
 
 # Instalando aplicaciones
 sudo apt install -y kitty fastfetch lsd bat neovim zsh zsh-autosuggestions zsh-syntax-highlighting curl librewolf nomacs python3-venv npm wl-clipboard flatpak plasma-discover-backend-flatpak python-is-python3 htop lazygit ranger fd-find solaar gcc-12 libgcc-12-dev gh ripgrep plymouth-themes kde-config-plymouth
@@ -94,6 +95,15 @@ echo ""
 git clone https://github.com/Slifer4010/nvim.git ~/.config/nvim
 
 echo ""
+echo "####################"
+echo "## INSTALANDO FZF ##"
+echo "####################"
+echo ""
+
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+echo ""
 echo "########################"
 echo "## DESINSTALANDO APPS ##"
 echo "########################"
@@ -110,5 +120,4 @@ echo ""
 
 sudo timedatectl set-local-rtc 1
 
-sudo rm -r ~/borrar
 notify-send -i dialog-information "Instalación terminada" "Todo listo"
